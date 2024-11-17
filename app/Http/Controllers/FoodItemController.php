@@ -34,11 +34,12 @@ class FoodItemController extends Controller
             'price' => 'required|numeric',
             'category' => 'nullable|string',
             'stock' => 'required|integer',
+            'exdate' => 'nullable|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for photo
         ]);
 
         // Prepare data for insertion
-        $data = $request->only(['name', 'description', 'price', 'category', 'stock']);
+        $data = $request->only(['name', 'description', 'price', 'category', 'stock','exdate']);
 
         // Check if a photo is uploaded
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
@@ -63,6 +64,7 @@ class FoodItemController extends Controller
             'price' => 'sometimes|required|numeric',
             'category' => 'nullable|string',
             'stock' => 'sometimes|required|integer',
+            'exdate' => 'nullable|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for photo
         ]);
 
@@ -73,7 +75,7 @@ class FoodItemController extends Controller
         }
 
         // Prepare data for update
-        $data = $request->only(['name', 'description', 'price', 'category', 'stock']);
+        $data = $request->only(['name', 'description', 'price', 'category', 'stock','exdate']);
 
         // Check if a new photo is uploaded
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {

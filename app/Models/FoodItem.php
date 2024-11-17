@@ -21,6 +21,7 @@ class FoodItem extends Model
         'price',
         'category',
         'stock',
+        'exdate',
         'photo',
     ];
     public function meals()

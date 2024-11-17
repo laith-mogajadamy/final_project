@@ -22,10 +22,9 @@ use App\Http\Controllers\OrderController;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/allusers', [UsersController::class, 'index'])
-                ->middleware(['auth:sanctum'])
-                ->name('allusers');
-
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::apiResource('users', UsersController::class);
+});
 Route::middleware(['auth:sanctum'])->group(function () {
        Route::apiResource('food-items', FoodItemController::class);
 });

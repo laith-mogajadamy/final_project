@@ -33,10 +33,11 @@ class MealController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
+            'stock' => 'sometimes|required|integer',
             'photo' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048', // Validate photo
         ]);
 
-        $data = $request->only(['name', 'description', 'price']);
+        $data = $request->only(['name', 'description', 'price','stock']);
 
         // Handle file upload
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
@@ -69,13 +70,14 @@ class MealController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'sometimes|required|numeric',
+            'stock' => 'sometimes|required|integer',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'food_item_ids' => 'array',
             'food_item_ids.*' => 'exists:food_items,id'
         ]);
 
         // Prepare the data for update (excluding the photo field for now)
-        $data = $request->only(['name', 'description', 'price']);
+        $data = $request->only(['name', 'description', 'price','stock']);
 
         // Check if there's a new photo in the request
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {

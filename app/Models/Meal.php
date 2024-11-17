@@ -14,6 +14,7 @@ class Meal extends Model
     'name',
     'description',
     'price',
+    'stock',
     'photo',
     ];
 

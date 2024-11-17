@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -14,8 +15,8 @@ class UsersController extends Controller
     public function index()
     {
         $users=User::all();
-        // return $users;
-        return UserResource::collection($users);
+        return $users;
+        // return UserResource::collection($users);
     }
 
     /**
@@ -37,9 +38,23 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validate the request to ensure 'permission' is provided
+        $request->validate([
+            'permission' => 'required|string|in:customer,maneger,cachire',
+        ]);
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'user not found'], 404);
+        }
+        // $data = $request->only(['permission']);
+        // $user->update($data);
+        $user->permission = $request->permission;
+        $user->save();
+        return response()->json($user);
     }
 
     /**
